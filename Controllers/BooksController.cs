@@ -13,10 +13,7 @@ namespace LibApp_Gr6.Controllers
         {
             var firstBook = new Book() { Name = "English dictionary" };
 
-            ViewBag.Book = firstBook;
-            // ViewData["Book"] = firstBook
-
-            return View();
+            return View(firstBook);
         }
 
         public IActionResult Index(int? pageIndex, string sortBy)
