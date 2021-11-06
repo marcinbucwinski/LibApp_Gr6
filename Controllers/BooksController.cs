@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibApp_Gr6.Models;
+using LibApp_Gr6.ViewModels;
 
-namespace LibApp_Gr6.Controllers
+namespace LibApp.Controllers
 {
     public class BooksController : Controller
     {
@@ -13,28 +14,46 @@ namespace LibApp_Gr6.Controllers
         {
             var firstBook = new Book() { Name = "English dictionary" };
 
-            return View(firstBook);
+            var customers = new List<Customer>
+            {
+                new Customer {Name = "Customer 1"},
+                new Customer {Name = "Customer 2"}
+            };
+
+            var viewModel = new RandomBookViewModel
+            {
+                Book = firstBook,
+                Customers = customers
+            };
+
+            return View(viewModel);
         }
 
-        public IActionResult Index(int? pageIndex, string sortBy)
+        public IActionResult Edit(int bookId)
         {
-            if (!pageIndex.HasValue) 
-            {
-                pageIndex = 1;
-            }
-
-            if (String.IsNullOrEmpty(sortBy))
-            {
-                sortBy = "Name";
-            }
-
-            return Content($"pageIndex={pageIndex}&sortBy={sortBy}");
+            return Content("id=" + bookId);
         }
 
-        [Route("books/released/{year:regex(^\\d{{4}}$)}/{month:range(1,12)}")]
+        public IActionResult Index()
+        {
+            var books = GetBooks();
+
+            return View(books);
+        }
+
+        [Route("books/released/{year:regex(^\\d{{4}}$)}/{month:range(1, 12)}")]
         public IActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
+        }
+
+        private IEnumerable<Book> GetBooks()
+        {
+            return new List<Book>
+            {
+                new Book {Id = 1, Name = "Hamlet"},
+                new Book {Id = 2, Name = "Ulysses"}
+            };
         }
     }
 }
