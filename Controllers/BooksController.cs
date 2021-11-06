@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using LibApp_Gr6.Models;
 using LibApp_Gr6.ViewModels;
 
-namespace LibApp.Controllers
+namespace LibApp_Gr6.Controllers
 {
     public class BooksController : Controller
     {
